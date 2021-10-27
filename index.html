@@ -41,6 +41,7 @@
   title="配置项"
   :visible.sync="drawer"
   :direction="direction"
+  :size=640
   >
       <el-col :span="24">
       <el-card >
@@ -153,11 +154,21 @@
       </el-card>
     </el-col>
 </el-drawer>
-<a href="https://www.mfwztj.com/" target="_blank"><img src="https://www.mfwztj.com/hit.php?id=zuexxkn&nd=6&style=80" border="0" alt="免费计数器"></a>
+
     <el-row :gutter="10">
 
-    <el-col ::xs="{span:12,offset:6}" :sm="{span:12,offset:5}" :md="{span:12,offset:4}">
+    <el-col :xs="{span:12,offset:6}" :sm="{span:14,offset:5}" :md="{span:16,offset:4}">
       <el-card >
+        <el-row :gutter="10">
+          <el-col :span="20">
+         <el-button type="warning" justify=center round @click="add">打印试卷</el-button>
+      <el-button type="primary" justify=center round @click="showConf">试卷选项</el-button>
+          </el-col>
+      <el-col :span="4">
+     已有 <a href="https://www.mfwztj.com/" target="_blank"><img src="https://www.mfwztj.com/hit.php?id=zuexxkn&nd=6&style=80" border="0" alt="免费计数器"></a> 次访问
+      </el-col>
+        </el-row>
+      <el-divider></el-divider>
         <div id='paper' >
         <div slot="header" class="clearfix" style="text-align: center;font-family: 宋体; font-size: 16px;">
           <span contenteditable="true"> <i class="el-icon-edit"></i>小学加减法口算训练</span><br><br>
@@ -165,9 +176,10 @@
         </div>
         <table width="100%" cellpadding="8" cellspacing="12" style="font-family: 宋体; font-size: 14px;" v-html="content">
         </table>
+        
+
       </div>
-      <el-button type="warning" justify=center round @click="add">打印试卷</el-button>
-      <el-button type="primary" justify=center round @click="showConf">试卷选项</el-button>
+     
       </el-card>
     
     </el-col>
