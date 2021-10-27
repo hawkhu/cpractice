@@ -37,12 +37,16 @@
 
 <body>
   <div id="app">
-    <el-col :span="7">
-      <el-card class="box-card">
+    <el-drawer
+  title="配置项"
+  :visible.sync="drawer"
+  :direction="direction"
+  >
+      <el-col :span="24">
+      <el-card >
         <div slot="header" class="clearfix">
           <i class="el-icon-edit"></i>
           <span>小学口算题工厂</span>
-          <a href="https://www.mfwztj.com/" target="_blank"><img src="https://www.mfwztj.com/hit.php?id=zuexxkn&nd=6&style=80" border="0" alt="免费计数器"></a>
         </div>
         <el-row>
           <el-col :span="8">
@@ -143,29 +147,40 @@
 
 
           <el-button type="primary" justify=center round @click="gen">生成试卷</el-button>
-          <el-button type="warning" justify=center round @click="add">打印试卷</el-button>
+          
 
         </el-row>
       </el-card>
     </el-col>
-    <el-col :span="10">
-      <el-card id='paper'>
+</el-drawer>
+<a href="https://www.mfwztj.com/" target="_blank"><img src="https://www.mfwztj.com/hit.php?id=zuexxkn&nd=6&style=80" border="0" alt="免费计数器"></a>
+    <el-row :gutter="10">
+
+    <el-col ::xs="{span:12,offset:6}" :sm="{span:12,offset:5}" :md="{span:12,offset:4}">
+      <el-card >
+        <div id='paper' >
         <div slot="header" class="clearfix" style="text-align: center;font-family: 宋体; font-size: 16px;">
           <span contenteditable="true"> <i class="el-icon-edit"></i>小学加减法口算训练</span><br><br>
           <span>姓名：_______________ 日期：______月______日 时间：____________ 对题：______道 </span>
         </div>
         <table width="100%" cellpadding="8" cellspacing="12" style="font-family: 宋体; font-size: 14px;" v-html="content">
         </table>
+      </div>
+      <el-button type="warning" justify=center round @click="add">打印试卷</el-button>
+      <el-button type="primary" justify=center round @click="showConf">试卷选项</el-button>
       </el-card>
+    
     </el-col>
-    <div class="text item">
-    </div>
+    </el-row>
+
   </div>
   <script>
     new Vue({
       el: '#app',
       data: function () {
         return {
+          direction: 'ltr',
+          drawer: true,
           num: 100,
           n: 100,
           op: '+',
@@ -181,7 +196,11 @@
         add() {
           $("#paper").printArea();
         },
+        showConf() {
+          this.drawer=true;
+        },
         gen() {
+          this.drawer=false;
           // console.log(this.num, this.n, this.addAndSub, this.brac, this.ops, this.format, this.paperNum, this.op)
           let proSet = null;
           if (this.ops == 3)
