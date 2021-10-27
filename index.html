@@ -37,152 +37,144 @@
 
 <body>
   <div id="app">
-    <el-drawer
-  title="配置项"
-  :visible.sync="drawer"
-  :direction="direction"
-  :size=640
-  >
+    <el-drawer title="配置项" :visible.sync="drawer" :direction="direction" :size=640>
       <el-col :span="24">
-      <el-card >
-        <div slot="header" class="clearfix">
-          <i class="el-icon-edit"></i>
-          <span>小学口算题工厂</span>
-        </div>
-        <el-row>
-          <el-col :span="8">
-            <el-button type="info">生成题目数量：{{num}} 道</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-slider v-model="num" :step="10" :min=10 :max=100></el-slider>
-          </el-col>
-        </el-row>
-        <br>
-        <el-row>
-          <el-col :span="8">
-            <el-button type="info">数字范围：{{n}} 以内</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-slider v-model="n" :step="10" :min=20 :max=100></el-slider>
-          </el-col>
-        </el-row>
-        <br>
-        <el-row>
-          <el-col :span="8">
-            <el-button type="info">运算类型选项</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-radio-group v-model="op" size="medium">
-              <el-radio-button label="+">连加</el-radio-button>
-              <el-radio-button label="-">连减</el-radio-button>
-              <el-radio-button label="±">随机连加连减</el-radio-button>
-              <el-radio-button label="=">随机混合加减</el-radio-button>
-            </el-radio-group>
-          </el-col>
-        </el-row>
+        <el-card>
+          <div slot="header" class="clearfix">
+            <i class="el-icon-edit"></i>
+            <span>小学口算题工厂</span>
+          </div>
+          <el-row>
+            <el-col :span="8">
+              <el-button type="info">生成题目数量：{{num}} 道</el-button>
+            </el-col>
+            <el-col :span="16">
+              <el-slider v-model="num" :step="10" :min=10 :max=100></el-slider>
+            </el-col>
+          </el-row>
+          <br>
+          <el-row>
+            <el-col :span="8">
+              <el-button type="info">数字范围：{{n}} 以内</el-button>
+            </el-col>
+            <el-col :span="16">
+              <el-slider v-model="n" :step="10" :min=20 :max=100></el-slider>
+            </el-col>
+          </el-row>
+          <br>
+          <el-row>
+            <el-col :span="8">
+              <el-button type="info">运算类型选项</el-button>
+            </el-col>
+            <el-col :span="16">
+              <el-radio-group v-model="op" size="medium">
+                <el-radio-button label="+">连加</el-radio-button>
+                <el-radio-button label="-">连减</el-radio-button>
+                <el-radio-button label="±">随机连加连减</el-radio-button>
+                <el-radio-button label="=">随机混合加减</el-radio-button>
+              </el-radio-group>
+            </el-col>
+          </el-row>
 
 
-        <br>
-        <el-row>
-          <el-col :span="8">
-            <el-button type="info">进退位选项</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-radio-group v-model="addAndSub" size="medium">
-              <el-radio-button label=0>无进退位</el-radio-button>
-              <el-radio-button label=1>必带进退位</el-radio-button>
-              <el-radio-button label=2>随机进退位</el-radio-button>
-            </el-radio-group>
-          </el-col>
-        </el-row>
-        <br>
-        <el-row>
-          <el-col :span="8">
-            <el-button type="info">括号选项</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-radio-group v-model="brac" size="medium">
-              <el-radio-button label='1'>带括号</el-radio-button>
-              <el-radio-button label='0'>不带括号</el-radio-button>
-              <el-radio-button label='-1'>随机括号</el-radio-button>
-            </el-radio-group>
-          </el-col>
-        </el-row>
-        <br>
-        <el-row>
-          <el-col :span="8">
-            <el-button type="info">运算项个数</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-radio-group v-model="ops" size="medium">
-              <el-radio-button label=2>2个数字</el-radio-button>
-              <el-radio-button label=3>3个数字</el-radio-button>
-            </el-radio-group>
-          </el-col>
-        </el-row>
-        <br>
-        <el-row>
-          <el-col :span="8">
-            <el-button type="info">题目形式</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-radio-group v-model="format" size="medium">
-              <el-radio-button label='0'>求得数项</el-radio-button>
-              <el-radio-button label='1'>求运算项</el-radio-button>
-              <el-radio-button label='2'>随机求项</el-radio-button>
-            </el-radio-group>
-          </el-col>
-        </el-row>
-        <br>
+          <br>
+          <el-row>
+            <el-col :span="8">
+              <el-button type="info">进退位选项</el-button>
+            </el-col>
+            <el-col :span="16">
+              <el-radio-group v-model="addAndSub" size="medium">
+                <el-radio-button label=0>无进退位</el-radio-button>
+                <el-radio-button label=1>必带进退位</el-radio-button>
+                <el-radio-button label=2>随机进退位</el-radio-button>
+              </el-radio-group>
+            </el-col>
+          </el-row>
+          <br>
+          <el-row>
+            <el-col :span="8">
+              <el-button type="info">括号选项</el-button>
+            </el-col>
+            <el-col :span="16">
+              <el-radio-group v-model="brac" size="medium">
+                <el-radio-button label='1'>带括号</el-radio-button>
+                <el-radio-button label='0'>不带括号</el-radio-button>
+                <el-radio-button label='-1'>随机括号</el-radio-button>
+              </el-radio-group>
+            </el-col>
+          </el-row>
+          <br>
+          <el-row>
+            <el-col :span="8">
+              <el-button type="info">运算项个数</el-button>
+            </el-col>
+            <el-col :span="16">
+              <el-radio-group v-model="ops" size="medium">
+                <el-radio-button label=2>2个数字</el-radio-button>
+                <el-radio-button label=3>3个数字</el-radio-button>
+              </el-radio-group>
+            </el-col>
+          </el-row>
+          <br>
+          <el-row>
+            <el-col :span="8">
+              <el-button type="info">题目形式</el-button>
+            </el-col>
+            <el-col :span="16">
+              <el-radio-group v-model="format" size="medium">
+                <el-radio-button label='0'>求得数项</el-radio-button>
+                <el-radio-button label='1'>求运算项</el-radio-button>
+                <el-radio-button label='2'>随机求项</el-radio-button>
+              </el-radio-group>
+            </el-col>
+          </el-row>
+          <br>
 
-        <el-row>
-          <el-col :span="8">
-            <el-button type="info">生成卷子：{{paperNum}} 张</el-button>
-          </el-col>
-          <el-col :span="16">
-            <el-slider v-model="paperNum" :min=1 :max=20></el-slider>
-          </el-col>
-        </el-row>
-        <el-divider></el-divider>
-        <el-row>
+          <el-row>
+            <el-col :span="8">
+              <el-button type="info">生成卷子：{{paperNum}} 张</el-button>
+            </el-col>
+            <el-col :span="16">
+              <el-slider v-model="paperNum" :min=1 :max=20></el-slider>
+            </el-col>
+          </el-row>
+          <el-divider></el-divider>
 
-
-          <el-button type="primary" justify=center round @click="gen">生成试卷</el-button>
-          
-
-        </el-row>
-      </el-card>
-    </el-col>
-</el-drawer>
+        </el-card>
+      </el-col>
+    </el-drawer>
 
     <el-row :gutter="10">
 
-    <el-col :xs="{span:12,offset:6}" :sm="{span:14,offset:5}" :md="{span:16,offset:4}">
-      <el-card >
-        <el-row :gutter="10">
-          <el-col :span="20">
-         <el-button type="warning" justify=center round @click="add">打印试卷</el-button>
-      <el-button type="primary" justify=center round @click="showConf">试卷选项</el-button>
-          </el-col>
-      <el-col :span="4">
-     已有 <a href="https://www.mfwztj.com/" target="_blank"><img src="https://www.mfwztj.com/hit.php?id=zuexxkn&nd=6&style=80" border="0" alt="免费计数器"></a> 次访问
-      </el-col>
-        </el-row>
-      <el-divider></el-divider>
-        <div id='paper' >
-        <div slot="header" class="clearfix" style="text-align: center;font-family: 宋体; font-size: 16px;">
-          <span contenteditable="true"> <i class="el-icon-edit"></i>小学加减法口算训练</span><br><br>
-          <span>姓名：_______________ 日期：______月______日 时间：____________ 对题：______道 </span>
-        </div>
-        <table width="100%" cellpadding="8" cellspacing="12" style="font-family: 宋体; font-size: 14px;" v-html="content">
-        </table>
-        
+      <el-col :xs="{span:12,offset:6}" :sm="{span:14,offset:5}" :md="{span:16,offset:4}">
+        <el-card>
+          <el-row :gutter="10">
+            <el-col :span="20">
+              <el-button type="success" justify=center round @click="gen">生成试卷</el-button>
+              <el-button type="warning" justify=center round @click="add">打印试卷</el-button>
+              <el-button type="primary" justify=center round @click="showConf">试卷选项</el-button>
+            </el-col>
+            <el-col :span="4">
+              已有 <a href="https://www.mfwztj.com/" target="_blank"><img
+                  src="https://www.mfwztj.com/hit.php?id=zuexxkn&nd=6&style=80" border="0" alt="免费计数器"></a> 次访问
+            </el-col>
+          </el-row>
+          <el-divider></el-divider>
+          <div id='paper'>
+            <div slot="header" class="clearfix" style="text-align: center;font-family: 宋体; font-size: 16px;">
+              <span contenteditable="true"> <i class="el-icon-edit"></i>小学加减法口算训练</span><br><br>
+              <span>姓名：_______________ 日期：______月______日 时间：____________ 对题：______道 </span>
+            </div>
+            <table width="100%" cellpadding="8" cellspacing="12" style="font-family: 宋体; font-size: 14px;"
+              v-html="content">
+            </table>
 
-      </div>
-     
-      </el-card>
-    
-    </el-col>
+
+          </div>
+
+        </el-card>
+
+      </el-col>
     </el-row>
 
   </div>
@@ -209,10 +201,10 @@
           $("#paper").printArea();
         },
         showConf() {
-          this.drawer=true;
+          this.drawer = true;
         },
         gen() {
-          this.drawer=false;
+          this.drawer = false;
           // console.log(this.num, this.n, this.addAndSub, this.brac, this.ops, this.format, this.paperNum, this.op)
           let proSet = null;
           if (this.ops == 3)
