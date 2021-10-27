@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script type="text/javascript" src="./lib/jquery.min.js"></script>
+  <script type="text/javascript" src="./lib/printArea.js"></script>
+  <script src="./lib/gen.js"></script>
+</head>
+
+<style>
+  .text {
+    font-size: 14px;
+  }
+
+  .item {
+    margin-bottom: 18px;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+
+  .clearfix:after {
+    clear: both
+  }
+
+  .box-card {
+    width: 680px;
+  }
+</style>
+
+<body>
+  <div id="app">
+    <el-col :span="7">
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <i class="el-icon-edit"></i>
+          <span>小学口算题工厂</span>
+        </div>
+        <el-row>
+          <el-col :span="8">
+            <el-button type="info">生成题目数量：{{num}} 道</el-button>
+          </el-col>
+          <el-col :span="16">
+            <el-slider v-model="num" :step="10" :min=10 :max=100></el-slider>
+          </el-col>
+        </el-row>
+        <br>
+        <el-row>
+          <el-col :span="8">
+            <el-button type="info">数字范围：{{n}} 以内</el-button>
+          </el-col>
+          <el-col :span="16">
+            <el-slider v-model="n" :step="10" :min=20 :max=100></el-slider>
+          </el-col>
+        </el-row>
+        <br>
+        <el-row>
+          <el-col :span="8">
+            <el-button type="info">运算类型选项</el-button>
+          </el-col>
+          <el-col :span="16">
+            <el-radio-group v-model="op" size="medium">
+              <el-radio-button label="+">连加</el-radio-button>
+              <el-radio-button label="-">连减</el-radio-button>
+              <el-radio-button label="±">随机连加连减</el-radio-button>
+              <el-radio-button label="=">随机混合加减</el-radio-button>
+            </el-radio-group>
+          </el-col>
+        </el-row>
+
+
+        <br>
+        <el-row>
+          <el-col :span="8">
+            <el-button type="info">进退位选项</el-button>
+          </el-col>
+          <el-col :span="16">
+            <el-radio-group v-model="addAndSub" size="medium">
+              <el-radio-button label=0>无进退位</el-radio-button>
+              <el-radio-button label=1>必带进退位</el-radio-button>
+              <el-radio-button label=2>随机进退位</el-radio-button>
+            </el-radio-group>
+          </el-col>
+        </el-row>
+        <br>
+        <el-row>
+          <el-col :span="8">
+            <el-button type="info">括号选项</el-button>
+          </el-col>
+          <el-col :span="16">
+            <el-radio-group v-model="brac" size="medium">
+              <el-radio-button label='1'>带括号</el-radio-button>
+              <el-radio-button label='0'>不带括号</el-radio-button>
+              <el-radio-button label='-1'>随机括号</el-radio-button>
+            </el-radio-group>
+          </el-col>
+        </el-row>
+        <br>
+        <el-row>
+          <el-col :span="8">
+            <el-button type="info">运算项个数</el-button>
+          </el-col>
+          <el-col :span="16">
+            <el-radio-group v-model="ops" size="medium">
+              <el-radio-button label=2>2个数字</el-radio-button>
+              <el-radio-button label=3>3个数字</el-radio-button>
+            </el-radio-group>
+          </el-col>
+        </el-row>
+        <br>
+        <el-row>
+          <el-col :span="8">
+            <el-button type="info">题目形式</el-button>
+          </el-col>
+          <el-col :span="16">
+            <el-radio-group v-model="format" size="medium">
+              <el-radio-button label='0'>求得数项</el-radio-button>
+              <el-radio-button label='1'>求运算项</el-radio-button>
+              <el-radio-button label='2'>随机求项</el-radio-button>
+            </el-radio-group>
+          </el-col>
+        </el-row>
+        <br>
+
+        <el-row>
+          <el-col :span="8">
+            <el-button type="info">生成卷子：{{paperNum}} 张</el-button>
+          </el-col>
+          <el-col :span="16">
+            <el-slider v-model="paperNum" :min=1 :max=20></el-slider>
+          </el-col>
+        </el-row>
+        <el-divider></el-divider>
+        <el-row>
+
+
+          <el-button type="primary" justify=center round @click="gen">生成试卷</el-button>
+          <el-button type="warning" justify=center round @click="add">打印试卷</el-button>
+
+        </el-row>
+      </el-card>
+    </el-col>
+    <el-col :span="10">
+      <el-card id='paper'>
+        <div slot="header" class="clearfix" style="text-align: center;font-family: 宋体; font-size: 16px;">
+          <span contenteditable="true"> <i class="el-icon-edit"></i>小学加减法口算训练</span><br><br>
+          <span>姓名：_______________ 日期：______月______日 时间：____________ 对题：______道 </span>
+        </div>
+        <table width="100%" cellpadding="8" cellspacing="12" style="font-family: 宋体; font-size: 14px;" v-html="content">
+        </table>
+      </el-card>
+    </el-col>
+    <div class="text item">
+    </div>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          num: 100,
+          n: 100,
+          op: '+',
+          addAndSub: 1,
+          brac: '1',
+          ops: 3,
+          format: '1',
+          paperNum: 1,
+          content: ''
+        }
+      },
+      methods: {
+        add() {
+          $("#paper").printArea();
+        },
+        gen() {
+          // console.log(this.num, this.n, this.addAndSub, this.brac, this.ops, this.format, this.paperNum, this.op)
+          let proSet = null;
+          if (this.ops == 3)
+            proSet = plus_minus_3ops(this.num, this.n, parseInt(this.brac), parseInt(this.addAndSub), this.op)
+          else
+            proSet = plus_minus_2ops(this.num, this.n, parseInt(this.addAndSub), this.op)
+          let oo = 0;
+          this.content = '';
+          for (let i of proSet.values()) {
+            oo++
+
+            if (oo % 5 == 1)
+              this.content = this.content + '<tr>';
+            if (this.ops == 3) {
+              let pos = null;
+              switch (this.format) {
+                case '0':
+                  i.rs = '___';
+                  break;
+                case '1':
+                  pos = Math.floor(Math.random() * 3)
+                  if (pos == 0)
+                    i.firstNum = '___';
+                  else if (pos == 1)
+                    i.secNum = '___';
+                  else if (pos == 2)
+                    i.thirdNum = '___';
+                  break;
+                case '2':
+                  pos = Math.floor(Math.random() * 4)
+                  if (pos == 0)
+                    i.firstNum = '___';
+                  else if (pos == 1)
+                    i.secNum = '___';
+                  else if (pos == 2)
+                    i.thirdNum = '___';
+                  else if (pos == 3)
+                    i.rs = '___';
+                  break;
+              }
+              switch (this.brac) {
+                case '1':
+                  i.secNum = '(' + i.secNum;
+                  i.thirdNum = i.thirdNum + ')';
+                  break;
+                case '0':
+                  break;
+                case '-1':
+                  pos = Math.floor(Math.random() * 2)
+                  if (pos == 1) {
+                    i.secNum = '(' + i.secNum;
+                    i.thirdNum = i.thirdNum + ')';
+                  }
+                  break;
+              }
+              this.content = this.content + '<td style="padding: 8px 6px;">' +
+                i.firstNum
+                + i.firstOp
+                + i.secNum
+                + i.secOp
+                + i.thirdNum
+                + '='
+                + i.rs + '</td>'
+                ;
+            }
+            else {
+              let pos = null;
+              switch (this.format) {
+                case '0':
+                  i.rs = '___';
+                  break;
+                case '1':
+                  pos = Math.floor(Math.random() * 2)
+                  if (pos == 1)
+                    i.firstNum = '___';
+                  else
+                    i.secNum = '___';
+                  break;
+                case '2':
+                  pos = Math.floor(Math.random() * 3)
+                  if (pos == 0)
+                    i.firstNum = '___';
+                  else if (pos == 1)
+                    i.secNum = '___';
+                  else if (pos == 2)
+                    i.rs = '___';
+                  break;
+              }
+              this.content = this.content + '<td style="padding: 8px 6px;">' +
+                i.firstNum
+                + i.firstOp
+                + i.secNum
+                + '='
+                + i.rs
+                + '</td>'
+                ;
+            }
+            if (oo % 5 == 0)
+              this.content = this.content + '</tr>';
+          }
+
+        }
+      }
+    })
+
+  </script>
+</body>
+
+</html>
